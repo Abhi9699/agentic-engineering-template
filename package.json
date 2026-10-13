@@ -1,47 +1,72 @@
 {
-    "name":  "agentic-engineering-template",
-    "version":  "1.0.0",
-    "type":  "module",
-    "private":  true,
-    "engines":  {
-                    "node":  "\u003e=20.0.0"
-                },
-    "scripts":  {
-                    "typecheck":  "tsc --noEmit",
-                    "test":  "vitest run",
-                    "gate:quick":  "node scripts/gate.mjs --quick",
-                    "gate":  "node scripts/gate.mjs",
-                    "gate:full":  "npm run check:rules \u0026\u0026 npm run check:agents \u0026\u0026 npm run check:control-plane \u0026\u0026 npm run check:vault \u0026\u0026 npm run prove:gates \u0026\u0026 npm run typecheck \u0026\u0026 npm run test",
-                    "check:rules":  "node scripts/check-hard-rules.mjs",
-                    "check:rules:coverage":  "node scripts/check-hard-rules.mjs --coverage",
-                    "check:agents":  "node scripts/check-agent-parity.mjs",
-                    "agent:doctor":  "node scripts/agent-doctor.mjs",
-                    "agent:validate":  "node scripts/agent-system/validate-manifests.mjs",
-                    "agent:graph":  "node scripts/agent-system/check-graph.mjs",
-                    "agent:generate":  "node scripts/agent-system/generate-adapters.mjs \u0026\u0026 node scripts/agent-system/generate-hooks.mjs",
-                    "agent:task":  "node scripts/agent-system/resolve-task.mjs",
-                    "exec:review":  "node scripts/agent-system/exec-review.mjs",
-                    "agent:selftest":  "node scripts/agent-system/self-test.mjs",
-                    "agent:context":  "node scripts/agent-system/check-context-budget.mjs",
-                    "skills:sync":  "node scripts/agent-system/sync-skills.mjs",
-                    "skills:mirrors":  "node scripts/agent-system/generate-skill-mirrors.mjs",
-                    "check:control-plane":  "npm run agent:validate \u0026\u0026 npm run agent:graph \u0026\u0026 node scripts/agent-system/sync-skills.mjs \u0026\u0026 node scripts/agent-system/generate-skill-mirrors.mjs --check \u0026\u0026 node scripts/agent-system/generate-adapters.mjs --check \u0026\u0026 node scripts/agent-system/generate-hooks.mjs --check \u0026\u0026 npm run agent:selftest \u0026\u0026 npm run agent:context \u0026\u0026 node scripts/agent-system/check-complexity-budget.mjs \u0026\u0026 node scripts/agent-doctor.mjs --strict \u0026\u0026 npm run check:controls",
-                    "check:controls":  "node scripts/check-controls.mjs",
-                    "check:tokens":  "node scripts/check-tokens.mjs",
-                    "check:line-caps":  "node scripts/check-line-caps.mjs",
-                    "check:doc-drift":  "node scripts/check-doc-drift.mjs",
-                    "plan:lint":  "node scripts/plan-lint.mjs",
-                    "check:vault":  "node scripts/check-vault.mjs",
-                    "prove:gates":  "node scripts/prove-gate.mjs",
-                    "task:preflight":  "node scripts/task-preflight.mjs",
-                    "gen:configs":  "node scripts/gen-agent-configs.mjs",
-                    "prepare":  "git config core.hooksPath .githooks || exit 0"
-                },
-    "devDependencies":  {
-                            "@types/node":  "^26.0.0",
-                            "tsx":  "^4.23.0",
-                            "typescript":  "^5.8.0",
-                            "vitest":  "^4.1.0",
-                            "yaml":  "^2.9.0"
-                        }
+  "name": "agentic-engineering-template",
+  "version": "1.0.0",
+  "description": "Production-grade multi-IDE agentic engineering control plane and software engineering template",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "Abhishek Kushwaha",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Abhi9699/agentic-engineering-template.git"
+  },
+  "homepage": "https://github.com/Abhi9699/agentic-engineering-template#readme",
+  "bugs": {
+    "url": "https://github.com/Abhi9699/agentic-engineering-template/issues"
+  },
+  "keywords": [
+    "agentic-engineering",
+    "ai-agents",
+    "multi-agent",
+    "control-plane",
+    "software-engineering-template",
+    "antigravity",
+    "claude-code",
+    "codex",
+    "cursor",
+    "copilot",
+    "typescript",
+    "architecture"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "gate:quick": "node scripts/gate.mjs --quick",
+    "gate": "node scripts/gate.mjs",
+    "gate:full": "npm run check:rules && npm run check:agents && npm run check:control-plane && npm run check:vault && npm run prove:gates && npm run typecheck && npm run test",
+    "check:rules": "node scripts/check-hard-rules.mjs",
+    "check:rules:coverage": "node scripts/check-hard-rules.mjs --coverage",
+    "check:agents": "node scripts/check-agent-parity.mjs",
+    "agent:doctor": "node scripts/agent-doctor.mjs",
+    "agent:validate": "node scripts/agent-system/validate-manifests.mjs",
+    "agent:graph": "node scripts/agent-system/check-graph.mjs",
+    "agent:generate": "node scripts/agent-system/generate-adapters.mjs && node scripts/agent-system/generate-hooks.mjs",
+    "agent:task": "node scripts/agent-system/resolve-task.mjs",
+    "exec:review": "node scripts/agent-system/exec-review.mjs",
+    "agent:selftest": "node scripts/agent-system/self-test.mjs",
+    "agent:context": "node scripts/agent-system/check-context-budget.mjs",
+    "skills:sync": "node scripts/agent-system/sync-skills.mjs",
+    "skills:mirrors": "node scripts/agent-system/generate-skill-mirrors.mjs",
+    "check:control-plane": "npm run agent:validate && npm run agent:graph && node scripts/agent-system/sync-skills.mjs && node scripts/agent-system/generate-skill-mirrors.mjs --check && node scripts/agent-system/generate-adapters.mjs --check && node scripts/agent-system/generate-hooks.mjs --check && npm run agent:selftest && npm run agent:context && node scripts/agent-system/check-complexity-budget.mjs && node scripts/agent-doctor.mjs --strict && npm run check:controls",
+    "check:controls": "node scripts/check-controls.mjs",
+    "check:tokens": "node scripts/check-tokens.mjs",
+    "check:line-caps": "node scripts/check-line-caps.mjs",
+    "check:doc-drift": "node scripts/check-doc-drift.mjs",
+    "plan:lint": "node scripts/plan-lint.mjs",
+    "check:vault": "node scripts/check-vault.mjs",
+    "prove:gates": "node scripts/prove-gate.mjs",
+    "task:preflight": "node scripts/task-preflight.mjs",
+    "gen:configs": "node scripts/gen-agent-configs.mjs",
+    "prepare": "git config core.hooksPath .githooks || exit 0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "tsx": "^4.23.0",
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.0",
+    "yaml": "^2.9.0"
+  }
 }
