@@ -1,5 +1,6 @@
 # Autonomous Agentic Engineering Architecture & Template
 
+[![CI](https://github.com/Abhi9699/agentic-engineering-template/actions/workflows/ci.yml/badge.svg)](https://github.com/Abhi9699/agentic-engineering-template/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![Multi-Agent](https://img.shields.io/badge/Architecture-Multi--Agent_Control_Plane-success.svg)](#)
 [![Gates](https://img.shields.io/badge/Ship_Gate-34%2F34_Probes_Biting-brightgreen.svg)](#)
@@ -50,11 +51,17 @@ npm run agent:selftest
 npm run gate:quick
 ```
 
-## Building a New Product with this Template
+## How to Build a Product With This Template
 
-This repository provides an autonomous engineering operating system and multi-agent harness for building mission-critical software products.
+### 1. Instantiate Your Repository
+Click the green **"Use this template"** button above to generate a new GitHub repository, or clone it directly:
+```bash
+git clone https://github.com/Abhi9699/agentic-engineering-template.git my-product
+cd my-product
+npm install
+```
 
-### 1. Configure Your Stack (`config/stack.config.json`)
+### 2. Configure Your Stack (`config/stack.config.json`)
 Declare your source code directories, runtime version, and test runners:
 ```json
 {
@@ -70,13 +77,13 @@ Declare your source code directories, runtime version, and test runners:
 }
 ```
 
-### 2. Connect Your Living Obsidian Vault
+### 3. Connect Your Living Obsidian Vault
 Open this repository or the `vault/` directory in **Obsidian**:
 - **Interactive Knowledge Graph:** Pre-configured color groups highlight Hubs (Indigo), Architecture (Cyan), Decisions/ADRs (Amber), Lessons Ledger (Emerald), and Open Questions (Rose).
 - **Single Source of Truth:** `vault/_START-HERE.md` anchors the bidirectional link graph. Update living notes when architectural changes land.
 - **Automated Vault Governance:** `npm run check:vault` ensures 100% link integrity, metadata validity, and zero broken citations.
 
-### 3. Develop with AI Agent Harnesses
+### 4. Develop with AI Agent Harnesses
 Multi-IDE agent configurations stay in exact sync across:
 - **Google Antigravity:** Native `.agents/` and `.agent/rules/`
 - **Claude Code:** `CLAUDE.md` and `.claude/`
@@ -85,7 +92,7 @@ Multi-IDE agent configurations stay in exact sync across:
 
 Run `npm run agent:generate` whenever you adjust specialist roles or instructions in `agent-system/`.
 
-### 4. Enforce Quality & Anti-Regression Gates
+### 5. Enforce Quality & Anti-Regression Gates
 - **`npm run gate:quick`** — Fast local bar before committing (AST rules + vault + types + tests).
 - **`npm run gate`** — Full ship gate required before opening a PR.
 - **`npm run prove:gates`** — Mutation test runner that re-proves all recorded lessons in `vault/_Lessons.md` still bite.
