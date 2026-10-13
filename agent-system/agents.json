@@ -1,0 +1,112 @@
+{
+    "kind":  "agents",
+    "version":  1,
+    "agents":  [
+                   {
+                       "id":  "reviewer",
+                       "lane":  "The one fresh-context reviewer: diffs and evidence checked against the task spec and the touched domain rules",
+                       "capabilities":  [
+                                            "repo-read",
+                                            "run-local-checks",
+                                            "official-docs-research",
+                                            "public-web-research"
+                                        ],
+                       "providers":  [
+                                         "claude",
+                                         "codex",
+                                         "antigravity"
+                                     ],
+                       "readOnly":  true,
+                       "status":  "active",
+                       "requiredSkills":  [
+
+                                          ],
+                       "providerConfig":  {
+                                              "claude":  {
+                                                             "description":  "The one reviewer, in a fresh context. Checks diffs against the task spec and domain rules. Never edits product files.",
+                                                             "tools":  [
+                                                                           "Read",
+                                                                           "Grep",
+                                                                           "Glob",
+                                                                           "Bash",
+                                                                           "Skill",
+                                                                           "WebFetch",
+                                                                           "WebSearch"
+                                                                       ],
+                                                             "disallowedTools":  [
+                                                                                     "Write",
+                                                                                     "Edit",
+                                                                                     "NotebookEdit"
+                                                                                 ],
+                                                             "memory":  "project",
+                                                             "omitClaudeMd":  true,
+                                                             "maxTurns":  25
+                                                         },
+                                              "codex":  {
+                                                            "description":  "The one reviewer, in a fresh context. Checks diffs against the task spec and domain rules. Never edits product files.",
+                                                            "sandboxMode":  "read-only"
+                                                        },
+                                              "antigravity":  {
+                                                                  "description":  "The one reviewer, in a fresh context. Checks diffs against the task spec and domain rules. Never edits product files.",
+                                                                  "tools":  [
+                                                                                "view_file",
+                                                                                "grep_search",
+                                                                                "find_by_name",
+                                                                                "run_command",
+                                                                                "search_web",
+                                                                                "read_url_content"
+                                                                            ],
+                                                                  "commandExecutionPolicy":  "sandbox"
+                                                              }
+                                          }
+                   },
+                   {
+                       "id":  "builder",
+                       "lane":  "The main session: builds every change inline and loads relevant workflow and domain skills",
+                       "runtime":  "main-session",
+                       "capabilities":  [
+                                            "repo-read",
+                                            "workspace-write",
+                                            "run-local-checks",
+                                            "browser-runtime",
+                                            "official-docs-research",
+                                            "db-schema-change",
+                                            "money-path-change",
+                                            "prompt-layer-change",
+                                            "paid-model-call",
+                                            "public-web-research",
+                                            "content-growth-analysis"
+                                        ],
+                       "requiredSkills":  [
+
+                                          ],
+                       "conditionalSkills":  [
+                                                 "spec",
+                                                 "plan-check",
+                                                 "ship-gate",
+                                                 "config-selftest"
+                                             ],
+                       "providers":  [
+                                         "claude",
+                                         "codex",
+                                         "antigravity"
+                                     ],
+                       "status":  "active"
+                   },
+                   {
+                       "id":  "explore",
+                       "lane":  "Read-only search: provider built-in search subagent, or main session searching inline",
+                       "runtime":  "built-in",
+                       "capabilities":  [
+                                            "repo-read"
+                                        ],
+                       "providers":  [
+                                         "claude",
+                                         "codex",
+                                         "antigravity"
+                                     ],
+                       "readOnly":  true,
+                       "status":  "active"
+                   }
+               ]
+}

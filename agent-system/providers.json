@@ -1,0 +1,276 @@
+{
+  "kind": "providers",
+  "version": 1,
+  "providers": [
+    {
+      "id": "claude",
+      "docsVerified": "2026-08-16",
+      "capabilityMappings": {
+        "repo-read": {
+          "mapping": "native",
+          "note": "tools allowlist in .claude/agents/*.md frontmatter"
+        },
+        "workspace-write": {
+          "mapping": "native"
+        },
+        "run-local-checks": {
+          "mapping": "native",
+          "note": "pre-approved Bash commands in settings.json"
+        },
+        "browser-runtime": {
+          "mapping": "wrapper",
+          "note": "browser runtime driver (plain Node + Playwright)"
+        },
+        "official-docs-research": {
+          "mapping": "native",
+          "note": "WebFetch/WebSearch"
+        },
+        "content-growth-analysis": {
+          "mapping": "native"
+        },
+        "public-web-research": {
+          "mapping": "native",
+          "note": "WebSearch/WebFetch; agent contract forbids authenticated browsing and sensitive query material"
+        },
+        "db-schema-change": {
+          "mapping": "wrapper",
+          "note": "drizzle-kit generate; migrations dir is write-denied"
+        },
+        "money-path-change": {
+          "mapping": "wrapper",
+          "note": "verify-money-path skill + Vitest suite"
+        },
+        "prompt-layer-change": {
+          "mapping": "wrapper",
+          "note": "PreToolUse reminder + recorded eval"
+        },
+        "paid-model-call": {
+          "mapping": "human-gated",
+          "note": "eval requires --live plus seven declared ceilings"
+        },
+        "secret-read": {
+          "mapping": "native",
+          "note": "permissions.deny blocks Read() on secret paths"
+        },
+        "deploy": {
+          "mapping": "human-gated"
+        },
+        "git-publish": {
+          "mapping": "human-gated",
+          "note": "commit/push only on explicit request"
+        }
+      }
+    },
+    {
+      "id": "codex",
+      "docsVerified": "2026-08-16",
+      "capabilityMappings": {
+        "repo-read": {
+          "mapping": "native"
+        },
+        "workspace-write": {
+          "mapping": "native"
+        },
+        "run-local-checks": {
+          "mapping": "native"
+        },
+        "browser-runtime": {
+          "mapping": "wrapper",
+          "note": "same driver.mjs; no Claude skill mechanism needed"
+        },
+        "official-docs-research": {
+          "mapping": "native",
+          "note": "hosted WebSearch is not covered by project hooks"
+        },
+        "content-growth-analysis": {
+          "mapping": "native"
+        },
+        "public-web-research": {
+          "mapping": "native",
+          "note": "Hosted web search is runtime-dependent. The strategist requires a secret-free worktree and public-only connectors; without those, use a caller-supplied public source bundle or return blocked. Parent overrides can weaken the subagent sandbox, so adapter configuration is not confinement proof."
+        },
+        "db-schema-change": {
+          "mapping": "wrapper"
+        },
+        "money-path-change": {
+          "mapping": "wrapper"
+        },
+        "prompt-layer-change": {
+          "mapping": "wrapper"
+        },
+        "paid-model-call": {
+          "mapping": "human-gated"
+        },
+        "secret-read": {
+          "mapping": "unsupported",
+          "note": "no repository-level read-denial control; requires a secret-free worktree"
+        },
+        "deploy": {
+          "mapping": "human-gated"
+        },
+        "git-publish": {
+          "mapping": "human-gated"
+        }
+      }
+    },
+    {
+      "id": "antigravity",
+      "docsVerified": "2026-09-02",
+      "capabilityMappings": {
+        "repo-read": {
+          "mapping": "native",
+          "note": "tools allowlist in .agents/agents/*.md frontmatter, using Antigravity tool identifiers (view_file, grep_search, ...); `tools` defaults to [] so every adapter names its own - no inheritance, no Claude fallback"
+        },
+        "workspace-write": {
+          "mapping": "native",
+          "note": "replace_file_content is the only workspace write tool; withholding it from the allowlist is the whole write-denial surface, since Antigravity has no PreToolUse hook equivalent to the Claude read-only guard"
+        },
+        "run-local-checks": {
+          "mapping": "native",
+          "note": "run_command under commandExecutionPolicy: sandbox (pinned, not defaulted), which restricts destructive shell operations and unauthorized outbound calls"
+        },
+        "browser-runtime": {
+          "mapping": "wrapper"
+        },
+        "official-docs-research": {
+          "mapping": "native"
+        },
+        "content-growth-analysis": {
+          "mapping": "native"
+        },
+        "public-web-research": {
+          "mapping": "native",
+          "note": "search_web and read_url_content"
+        },
+        "db-schema-change": {
+          "mapping": "wrapper"
+        },
+        "money-path-change": {
+          "mapping": "wrapper"
+        },
+        "prompt-layer-change": {
+          "mapping": "wrapper"
+        },
+        "paid-model-call": {
+          "mapping": "human-gated"
+        },
+        "secret-read": {
+          "mapping": "native",
+          "note": "PreToolUse hooks in .agents/hooks.json: antigravity-read-guard on view_file|grep_search and antigravity-command-guard on run_command (https://antigravity.google/docs/hooks/, retrieved 2026-10-11; doc 36 S2)"
+        },
+        "deploy": {
+          "mapping": "human-gated"
+        },
+        "git-publish": {
+          "mapping": "human-gated"
+        }
+      }
+    },
+    {
+      "id": "copilot",
+      "docsVerified": "2026-08-16",
+      "capabilityMappings": {
+        "repo-read": {
+          "mapping": "native",
+          "note": "read and search tool aliases"
+        },
+        "workspace-write": {
+          "mapping": "native"
+        },
+        "run-local-checks": {
+          "mapping": "native"
+        },
+        "browser-runtime": {
+          "mapping": "wrapper",
+          "note": "Playwright tools are localhost-only in Copilot cloud"
+        },
+        "official-docs-research": {
+          "mapping": "wrapper",
+          "note": "web alias works in supported IDE or CLI hosts; Copilot cloud needs a separately approved MCP source and otherwise fails closed"
+        },
+        "content-growth-analysis": {
+          "mapping": "native"
+        },
+        "public-web-research": {
+          "mapping": "wrapper",
+          "note": "web alias is not available in Copilot cloud; use an approved public source bundle or return blocked. Run in a secret-free worktree because repository-level secret read denial is unsupported."
+        },
+        "db-schema-change": {
+          "mapping": "wrapper"
+        },
+        "money-path-change": {
+          "mapping": "wrapper"
+        },
+        "prompt-layer-change": {
+          "mapping": "wrapper"
+        },
+        "paid-model-call": {
+          "mapping": "human-gated"
+        },
+        "secret-read": {
+          "mapping": "unsupported",
+          "note": "no repository-level read-denial control; requires a secret-free worktree"
+        },
+        "deploy": {
+          "mapping": "human-gated"
+        },
+        "git-publish": {
+          "mapping": "human-gated"
+        }
+      }
+    },
+    {
+      "id": "cursor",
+      "docsVerified": "2026-08-16",
+      "capabilityMappings": {
+        "repo-read": {
+          "mapping": "native",
+          "note": "readonly subagent mode removes file edits and state-changing shell commands"
+        },
+        "workspace-write": {
+          "mapping": "native"
+        },
+        "run-local-checks": {
+          "mapping": "native"
+        },
+        "browser-runtime": {
+          "mapping": "wrapper",
+          "note": "browser subagent and configured MCP tools"
+        },
+        "official-docs-research": {
+          "mapping": "wrapper",
+          "note": "inherits parent or team MCP tools; return blocked if current-source access is absent"
+        },
+        "content-growth-analysis": {
+          "mapping": "native"
+        },
+        "public-web-research": {
+          "mapping": "wrapper",
+          "note": "Cursor subagents inherit parent or team MCP tools, so the strategist mapping is source-bundle-only unless the host is independently attested public-only. Run in a secret-free worktree and return blocked when current evidence is absent."
+        },
+        "db-schema-change": {
+          "mapping": "wrapper"
+        },
+        "money-path-change": {
+          "mapping": "wrapper"
+        },
+        "prompt-layer-change": {
+          "mapping": "wrapper"
+        },
+        "paid-model-call": {
+          "mapping": "human-gated"
+        },
+        "secret-read": {
+          "mapping": "unsupported",
+          "note": "no repository-level read-denial control; requires a secret-free worktree"
+        },
+        "deploy": {
+          "mapping": "human-gated"
+        },
+        "git-publish": {
+          "mapping": "human-gated"
+        }
+      }
+    }
+  ]
+}

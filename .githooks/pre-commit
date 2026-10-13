@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -e
+
+node scripts/guard-secrets.mjs
+node scripts/check-hard-rules.mjs --staged
+node scripts/check-vault.mjs
+node scripts/check-agent-parity.mjs
+node scripts/check-tokens.mjs
+node scripts/check-line-caps.mjs

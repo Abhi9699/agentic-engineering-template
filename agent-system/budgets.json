@@ -1,0 +1,23 @@
+{
+  "kind": "budgets",
+  "version": 1,
+  "modelTiers": {
+    "reviewer": "standard"
+  },
+  "fanOut": {
+    "maxParallelAgents": 2,
+    "note": "The main session builds. A subagent runs only for high-volume search (built-in explore) or the fresh reviewer; two in parallel only when both are read-only."
+  },
+  "contextBudget": {
+    "note": "Characters injected on EVERY spawn: generated adapter body + each preloaded SKILL.md. Ceilings are agent-owned cost +25%.",
+    "perAgentChars": {
+      "reviewer": 7000
+    }
+  },
+  "complexity": {
+    "note": "Ratchet enforced by check-complexity-budget.mjs. Baselined at current template values.",
+    "npmScripts": 50,
+    "scriptsLines": 100000,
+    "startupBytes": 100000
+  }
+}

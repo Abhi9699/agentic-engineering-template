@@ -1,0 +1,72 @@
+{
+  "collapse-filter": false,
+  "search": "path:vault",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": false,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "file:_START-HERE or file:Active-Context",
+      "color": {
+        "a": 1,
+        "rgb": 6514417
+      }
+    },
+    {
+      "query": "file:Architecture",
+      "color": {
+        "a": 1,
+        "rgb": 439956
+      }
+    },
+    {
+      "query": "file:Decisions",
+      "color": {
+        "a": 1,
+        "rgb": 16096779
+      }
+    },
+    {
+      "query": "file:_Lessons",
+      "color": {
+        "a": 1,
+        "rgb": 1096065
+      }
+    },
+    {
+      "query": "file:Open-Questions",
+      "color": {
+        "a": 1,
+        "rgb": 16007006
+      }
+    },
+    {
+      "query": "file:Conventions",
+      "color": {
+        "a": 1,
+        "rgb": 9133302
+      }
+    },
+    {
+      "query": "file:Glossary or file:_CHANGELOG",
+      "color": {
+        "a": 1,
+        "rgb": 6583435
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1.25,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": true,
+  "centerStrength": 0.52,
+  "repelStrength": 12,
+  "linkStrength": 1,
+  "linkDistance": 200,
+  "scale": 0.5,
+  "close": false
+}

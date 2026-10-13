@@ -1,0 +1,24 @@
+{
+  "primaryLanguage": "typescript",
+  "version": "5.x",
+  "runtime": "node >=24",
+  "scanDirs": ["src"],
+  "testRunner": "vitest",
+  "commands": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "extensibility": {
+    "python": {
+      "runtime": "python >=3.12",
+      "scanDirs": ["src"],
+      "testRunner": "pytest",
+      "commands": {
+        "typecheck": "pyright src",
+        "test": "pytest",
+        "lint": "ruff check src"
+      }
+    }
+  }
+}

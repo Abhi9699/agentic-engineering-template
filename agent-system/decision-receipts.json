@@ -1,0 +1,22 @@
+{
+  "kind": "decision-receipts",
+  "version": 1,
+  "receipts": [
+    {
+      "id": "AD-00",
+      "status": "pending-prerequisites",
+      "scope": "A-NOW bootstrap hardening, seven rows in two reversible slices",
+      "register": "docs/engineering/agent-architecture-decisions.md",
+      "prerequisitesMet": false,
+      "evidence": "docs/engineering/audits/architecture/2026-07-31-a-now-implementation.md"
+    },
+    {
+      "id": "AD-15",
+      "status": "accepted",
+      "scope": "Repository-native read-only content-growth strategist, evidence validator, and generated adapters for Claude, Codex, Antigravity, GitHub Copilot, and Cursor",
+      "register": "docs/engineering/agent-architecture-decisions.md",
+      "prerequisitesMet": true,
+      "evidence": "docs/engineering/audits/architecture/2026-08-16-content-growth-strategist.md"
+    }
+  ]
+}

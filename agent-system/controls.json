@@ -1,0 +1,196 @@
+{
+    "kind":  "controls",
+    "version":  1,
+    "source":  "docs/engineering/agent-enforcement.md",
+    "pillarPaths":  {
+                        "security":  [
+                                         "src/**",
+                                         "scripts/guard-*.mjs"
+                                     ],
+                        "agents":  [
+                                       "agent-system/**",
+                                       ".agents/**",
+                                       ".claude/**",
+                                       "scripts/agent-system/**",
+                                       "AGENTS.md"
+                                   ],
+                        "governance":  [
+                                           "vault/**",
+                                           "docs/**",
+                                           "scripts/gate.mjs"
+                                       ]
+                    },
+    "controls":  [
+                     {
+                         "id":  "SEC-01",
+                         "pillar":  "security",
+                         "title":  "Secrets and credentials are never read, written, or committed",
+                         "refs":  [
+                                      "asvs:V1.1"
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "hook:scripts/guard-secrets.mjs",
+                                            "hook:scripts/guard-bash-secret-read.mjs"
+                                        ],
+                         "selfTest":  "scripts/__tests__/lesson-proofs.test.ts"
+                     },
+                     {
+                         "id":  "AGT-01",
+                         "pillar":  "agents",
+                         "title":  "Multi-IDE agent adapter generation and parity",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:check:agents"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "AGT-02",
+                         "pillar":  "agents",
+                         "title":  "Anti-regression lesson ledger self-proving tests",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:prove:gates"
+                                        ],
+                         "selfTest":  "scripts/__tests__/lesson-proofs.test.ts"
+                     },
+                     {
+                         "id":  "AGT-03",
+                         "pillar":  "agents",
+                         "title":  "Declarative manifest schema validation",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:agent:validate"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "AGT-04",
+                         "pillar":  "agents",
+                         "title":  "Control-plane DAG graph reachability and acyclicity",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:agent:graph"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "AGT-05",
+                         "pillar":  "agents",
+                         "title":  "Agent context token ceilings and budgets",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:agent:context"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "AGT-06",
+                         "pillar":  "agents",
+                         "title":  "Planted-failure self-test suite proving all gates bite",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:agent:selftest"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "AGT-07",
+                         "pillar":  "agents",
+                         "title":  "Universal commit-time guardrails and hooks",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "hook:scripts/guard-secrets.mjs"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "GOV-01",
+                         "pillar":  "governance",
+                         "title":  "Deterministic hard rules compile-time scanning",
+                         "refs":  [
+                                      "asvs:V2.1"
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:check:rules"
+                                        ],
+                         "selfTest":  null
+                     },
+                     {
+                         "id":  "GOV-02",
+                         "pillar":  "governance",
+                         "title":  "Living Knowledge Vault integrity and governance",
+                         "refs":  [
+
+                                  ],
+                         "modes":  [
+                                       "block"
+                                   ],
+                         "status":  "active",
+                         "phase":  "now",
+                         "mechanisms":  [
+                                            "npm:check:vault"
+                                        ],
+                         "selfTest":  null
+                     }
+                 ]
+}

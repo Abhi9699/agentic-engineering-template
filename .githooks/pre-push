@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -e
+
+refs=$(cat)
+
+printf '%s\n' "$refs" | node scripts/guard-main-push.mjs
+npm run gate:quick

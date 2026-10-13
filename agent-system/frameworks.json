@@ -1,0 +1,26 @@
+{
+    "kind":  "frameworks",
+    "version":  1,
+    "note":  "Vendored framework registries for autonomous engineering compliance.",
+    "frameworks":  [
+                       {
+                           "id":  "asvs",
+                           "name":  "OWASP ASVS 5.0.0 Level 2",
+                           "source":  "https://github.com/OWASP/ASVS/tree/v5.0.0",
+                           "retrieved":  "2026-10-12",
+                           "items":  [
+                                         {
+                                             "id":  "V1.1",
+                                             "title":  "Encoding and Sanitization Architecture"
+                                         },
+                                         {
+                                             "id":  "V2.1",
+                                             "title":  "Validation and Business Logic"
+                                         }
+                                     ],
+                           "dispositions":  {
+
+                                            }
+                       }
+                   ]
+}

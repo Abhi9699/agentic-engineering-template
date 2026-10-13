@@ -1,0 +1,39 @@
+{
+  "kind": "hooks",
+  "version": 1,
+  "description": "Single source for the task-discipline hooks. Policy lives in scripts/agent-system/hooks/core.mjs; each provider entry names a thin wrapper and the provider event it runs on. `npm run agent:generate` writes .agents/hooks.json and the managed entries of .claude/settings.json; `check:control-plane` fails on drift.",
+  "guards": [
+    {
+      "id": "command-guard",
+      "purpose": "Block secret reads, main pushes and destructive git from the shell.",
+      "antigravity": { "event": "PreToolUse", "matcher": "run_command", "command": "node scripts/agent-system/hooks/antigravity-command-guard.mjs", "timeout": 15 },
+      "claude": null,
+      "claudeEquivalent": "Unmanaged PreToolUse hooks in .claude/settings.json (guard-bash-secret-read, guard-main-push, guard-secrets), run in exec form through scripts/hook-fail-closed.mjs so any failure blocks; the same read guard on the PowerShell tool (guard-bash-secret-read --powershell), plus permissions.deny."
+    },
+    {
+      "id": "read-guard",
+      "purpose": "Block a file-tool read of a secret: a path that names one, or a wildcard that could expand to one (doc 36 S2). Only the tools that return contents are matched.",
+      "antigravity": { "event": "PreToolUse", "matcher": "view_file|grep_search", "command": "node scripts/agent-system/hooks/antigravity-read-guard.mjs", "timeout": 15 },
+      "claude": null,
+      "claudeEquivalent": "permissions.deny Read() rules on secret paths in .claude/settings.json."
+    },
+    {
+      "id": "write-guard",
+      "purpose": "Ledger every file write for the Stop gate and classify risk from the written paths; a vendor-integration or dependency path waits until research is captured.",
+      "antigravity": { "event": "PreToolUse", "matcher": "write_to_file|replace_file_content|multi_replace_file_content", "command": "node scripts/agent-system/hooks/antigravity-preflight-guard.mjs", "timeout": 5 },
+      "claude": { "event": "PreToolUse", "matcher": "Write|Edit|MultiEdit|NotebookEdit", "command": "node scripts/agent-system/hooks/claude-write-guard.mjs", "timeout": 10 }
+    },
+    {
+      "id": "preflight",
+      "purpose": "Advisory only (doc 34 W3), arms no gate: Claude notes an R3+ reading of the prompt, §B verify items and OPEN lessons; Antigravity repeats the research steps after a refused vendor write.",
+      "antigravity": { "event": "PreInvocation", "command": "node scripts/agent-system/hooks/antigravity-preinvocation-research.mjs", "timeout": 5 },
+      "claude": { "event": "UserPromptSubmit", "command": "node scripts/agent-system/hooks/claude-prompt-preflight.mjs", "timeout": 10 }
+    },
+    {
+      "id": "stop-evidence",
+      "purpose": "After any write since the gate last settled, run the related tests and tsc for the written paths, then the evidence check; at most 2 consecutive blocks, then stop with an UNVERIFIED notice.",
+      "antigravity": { "event": "Stop", "command": "node scripts/agent-system/hooks/antigravity-stop-evidence-guard.mjs", "timeout": 300 },
+      "claude": { "event": "Stop", "command": "node scripts/agent-system/hooks/claude-stop-guard.mjs", "timeout": 300 }
+    }
+  ]
+}

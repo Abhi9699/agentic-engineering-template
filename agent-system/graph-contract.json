@@ -1,0 +1,81 @@
+{
+  "kind": "graph-contract",
+  "version": 2,
+  "nodeTypes": [
+    "route",
+    "agent",
+    "capability",
+    "skill",
+    "provider",
+    "evidence-type",
+    "loop"
+  ],
+  "edgeTypes": [
+    {
+      "name": "requires",
+      "from": [
+        "route",
+        "agent"
+      ],
+      "to": [
+        "capability",
+        "skill",
+        "evidence-type"
+      ]
+    },
+    {
+      "name": "supplies",
+      "from": [
+        "agent"
+      ],
+      "to": [
+        "capability"
+      ]
+    },
+    {
+      "name": "implements-route",
+      "from": [
+        "route"
+      ],
+      "to": [
+        "agent"
+      ]
+    },
+    {
+      "name": "verifies-route",
+      "from": [
+        "route"
+      ],
+      "to": [
+        "agent"
+      ]
+    },
+    {
+      "name": "advises",
+      "from": [
+        "route"
+      ],
+      "to": [
+        "agent"
+      ]
+    },
+    {
+      "name": "implements",
+      "from": [
+        "provider"
+      ],
+      "to": [
+        "capability"
+      ]
+    },
+    {
+      "name": "owned-by",
+      "from": [
+        "skill"
+      ],
+      "to": [
+        "agent"
+      ]
+    }
+  ]
+}

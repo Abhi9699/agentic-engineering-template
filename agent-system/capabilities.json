@@ -1,0 +1,131 @@
+{
+  "kind": "capabilities",
+  "version": 1,
+  "capabilities": [
+    {
+      "id": "repo-read",
+      "description": "Read and search repository files without mutating them",
+      "risk": "R0",
+      "networkProfile": "none"
+    },
+    {
+      "id": "workspace-write",
+      "description": "Create and edit files in the working tree",
+      "risk": "R1",
+      "networkProfile": "none"
+    },
+    {
+      "id": "run-local-checks",
+      "description": "Execute the repository's offline check commands",
+      "risk": "R1",
+      "networkProfile": "none"
+    },
+    {
+      "id": "browser-runtime",
+      "description": "Drive a headless browser to observe rendered UI and capture evidence",
+      "risk": "R2",
+      "networkProfile": "none"
+    },
+    {
+      "id": "official-docs-research",
+      "description": "Fetch current vendor documentation from an allowlisted origin",
+      "risk": "R2",
+      "networkProfile": "official-readonly"
+    },
+    {
+      "id": "content-growth-analysis",
+      "description": "Develop content, positioning, lifecycle, channel and growth recommendations without mutating product state",
+      "risk": "R1",
+      "networkProfile": "none"
+    },
+    {
+      "id": "public-web-research",
+      "description": "Read current public sources for market and platform research without authenticated access or external mutation",
+      "risk": "R2",
+      "networkProfile": "public-readonly"
+    },
+    {
+      "id": "db-schema-change",
+      "description": "Edit lib/db/schema.ts and generate a Drizzle migration",
+      "risk": "R3",
+      "networkProfile": "none"
+    },
+    {
+      "id": "money-path-change",
+      "description": "Change credits, tiers, billing, webhooks or the 402 paywall",
+      "risk": "R3",
+      "networkProfile": "none"
+    },
+    {
+      "id": "prompt-layer-change",
+      "description": "Change the prompt registry, Gemini config, or the model in use",
+      "risk": "R3",
+      "networkProfile": "none"
+    },
+    {
+      "id": "paid-model-call",
+      "description": "Invoke a billable provider endpoint",
+      "risk": "R3",
+      "networkProfile": "approved-external",
+      "humanGateRequired": true
+    },
+    {
+      "id": "secret-read",
+      "description": "Read a credential file from disk",
+      "risk": "R4",
+      "networkProfile": "none",
+      "humanGateRequired": true,
+      "humanOnly": true
+    },
+    {
+      "id": "deploy",
+      "description": "Publish to a hosted environment",
+      "risk": "R4",
+      "networkProfile": "approved-external",
+      "humanGateRequired": true,
+      "humanOnly": true
+    },
+    {
+      "id": "git-publish",
+      "description": "Commit, push, or open a pull request",
+      "risk": "R3",
+      "networkProfile": "approved-external",
+      "humanGateRequired": true,
+      "humanOnly": true
+    }
+  ],
+  "mcpServers": [
+    {
+      "id": "context7",
+      "providers": ["antigravity"],
+      "endpoint": "https://mcp.context7.com/mcp",
+      "scope": "Read-only library documentation lookup; no repository or account access",
+      "networkProfile": "official-readonly",
+      "credential": false
+    },
+    {
+      "id": "supabase",
+      "providers": ["antigravity"],
+      "endpoint": "https://mcp.supabase.com/mcp",
+      "scope": "Supabase project admin (SQL, migrations, branches). Committed disabled; enabling needs OAuth in the provider panel, never a committed key",
+      "networkProfile": "approved-external",
+      "credential": true
+    },
+    {
+      "id": "posthog",
+      "providers": ["antigravity"],
+      "endpoint": "https://mcp.posthog.com/mcp",
+      "scope": "Product analytics read and insight queries. Committed disabled; enabling needs OAuth in the provider panel",
+      "networkProfile": "approved-external",
+      "credential": true
+    },
+    {
+      "id": "stitch",
+      "providers": ["claude"],
+      "endpoint": "Machine-local Claude config; .claude/settings.json only pre-approves its read and generate tools",
+      "scope": "Landing-page design generation (AGENTS.md §4: restyle the landing via stitch). Reads and writes Stitch projects only",
+      "networkProfile": "approved-external",
+      "credential": true
+    }
+  ]
+}

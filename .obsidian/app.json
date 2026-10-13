@@ -1,0 +1,26 @@
+{
+  "useMarkdownLinks": false,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "vault",
+  "attachmentFolderPath": "vault/attachments",
+  "userIgnoreFilters": [
+    "^node_modules/",
+    "^\\.git/",
+    "^\\.githooks/",
+    "^\\.agent/",
+    "^\\.agents/",
+    "^\\.claude/",
+    "^\\.github/",
+    "^agent-system/",
+    "^docs/",
+    "^scripts/",
+    "^src/",
+    "^dist/",
+    "^build/",
+    "^coverage/",
+    "^AGENTS\\.md$",
+    "^CLAUDE\\.md$",
+    "^GEMINI\\.md$",
+    "^README\\.md$"
+  ]
+}

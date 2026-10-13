@@ -1,0 +1,100 @@
+{
+  "kind": "skills",
+  "version": 1,
+  "skills": [
+    {
+      "id": "config-selftest",
+      "provenance": "tracked-first-party",
+      "status": "active",
+      "owner": "builder",
+      "networkProfile": "none",
+      "evidenceTypes": [],
+      "hashVerifiable": true,
+      "lastVerified": "2026-10-12",
+      "integrity": {
+        "algorithm": "agentic-skill-tree-sha256-v1",
+        "hash": "ea6a79490515b37952ce579e9828357069dbf38ba1de70ed30d5d3f88394842b",
+        "fileCount": 1
+      }
+    },
+    {
+      "id": "plan-check",
+      "provenance": "tracked-first-party",
+      "status": "active",
+      "owner": "reviewer",
+      "networkProfile": "none",
+      "evidenceTypes": [],
+      "hashVerifiable": true,
+      "lastVerified": "2026-10-12",
+      "integrity": {
+        "algorithm": "agentic-skill-tree-sha256-v1",
+        "hash": "859ef6156d2ef86f49b5d81dd8c073c1c2cb68b47f83fd0d0ee6f6388aaf7761",
+        "fileCount": 1
+      }
+    },
+    {
+      "id": "ship-gate",
+      "provenance": "tracked-first-party",
+      "status": "active",
+      "owner": "builder",
+      "networkProfile": "none",
+      "evidenceTypes": [],
+      "hashVerifiable": true,
+      "lastVerified": "2026-10-12",
+      "integrity": {
+        "algorithm": "agentic-skill-tree-sha256-v1",
+        "hash": "3784c07d57bd2c1e6a31520ae389473106a161db6bff146b9c80a3539d8ab99e",
+        "fileCount": 1
+      }
+    },
+    {
+      "id": "spec",
+      "provenance": "tracked-first-party",
+      "status": "active",
+      "owner": "builder",
+      "networkProfile": "none",
+      "evidenceTypes": [],
+      "hashVerifiable": true,
+      "lastVerified": "2026-10-12",
+      "integrity": {
+        "algorithm": "agentic-skill-tree-sha256-v1",
+        "hash": "42785f2b365e2f0f2c79cb1c447c5f760a1f79a64377f4871da70d333f05fd75",
+        "fileCount": 1
+      }
+    },
+    {
+      "id": "frontend-design",
+      "provenance": "provider-native",
+      "status": "active",
+      "owner": "builder",
+      "availableOn": [
+        "claude"
+      ],
+      "source": "Claude Code plugin skill (frontend-design); shipped by the provider",
+      "networkProfile": "none",
+      "hashVerifiable": false,
+      "lastVerified": "2026-09-02"
+    },
+    {
+      "id": "dataviz",
+      "provenance": "provider-native",
+      "status": "active",
+      "owner": "builder",
+      "availableOn": [
+        "claude"
+      ],
+      "source": "Claude Code plugin skill (dataviz); shipped by the provider",
+      "networkProfile": "none",
+      "hashVerifiable": false,
+      "lastVerified": "2026-09-02"
+    },
+    {
+      "id": "ui-styling",
+      "provenance": "unregistered",
+      "status": "quarantined",
+      "quarantineReason": "unregistered; quarantined as demonstration untrusted skill",
+      "hashVerifiable": false,
+      "lastVerified": "2026-07-31"
+    }
+  ]
+}

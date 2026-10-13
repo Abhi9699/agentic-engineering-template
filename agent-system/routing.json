@@ -1,0 +1,294 @@
+{
+    "kind":  "routing",
+    "version":  1,
+    "routes":  [
+                   {
+                       "id":  "answer-question",
+                       "triggers":  [
+                                        "explain",
+                                        "where is",
+                                        "how does",
+                                        "what does",
+                                        "which file"
+                                    ],
+                       "risk":  "R0",
+                       "effect":  "read-only",
+                       "implementers":  [
+                                            "explore"
+                                        ],
+                       "evidence":  [
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+
+                                   ]
+                   },
+                   {
+                       "id":  "minor-change",
+                       "triggers":  [
+                                        "typo",
+                                        "spelling",
+                                        "tooltip",
+                                        "wording",
+                                        "microcopy",
+                                        "copy tweak",
+                                        "placeholder text",
+                                        "aria-label"
+                                    ],
+                       "risk":  "R1",
+                       "effect":  "mutation",
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "accessibility",
+                                       "quality"
+                                   ]
+                   },
+                   {
+                       "id":  "ui-change",
+                       "triggers":  [
+                                        "screen",
+                                        "page",
+                                        "layout",
+                                        "css",
+                                        "accessibility",
+                                        "animation",
+                                        "theme",
+                                        "component"
+                                    ],
+                       "risk":  "R2",
+                       "effect":  "mutation",
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "advisors":  [
+                                        "reviewer"
+                                    ],
+                       "requiredSkills":  [
+                                              "spec",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "accessibility",
+                                       "performance",
+                                       "quality"
+                                   ]
+                   },
+                   {
+                       "id":  "backend-change",
+                       "triggers":  [
+                                        "service",
+                                        "action",
+                                        "api",
+                                        "route",
+                                        "endpoint",
+                                        "handler",
+                                        "mutation"
+                                    ],
+                       "risk":  "R2",
+                       "effect":  "mutation",
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "requiredSkills":  [
+                                              "spec",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "security",
+                                       "reliability"
+                                   ]
+                   },
+                   {
+                       "id":  "data-schema-change",
+                       "triggers":  [
+                                        "schema",
+                                        "migration",
+                                        "table",
+                                        "column",
+                                        "index",
+                                        "database"
+                                    ],
+                       "risk":  "R3",
+                       "effect":  "mutation",
+                       "humanGate":  true,
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "requiredSkills":  [
+                                              "spec",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "security",
+                                       "data",
+                                       "reliability"
+                                   ]
+                   },
+                   {
+                       "id":  "ai-pipeline-change",
+                       "triggers":  [
+                                        "prompt",
+                                        "model",
+                                        "gemini",
+                                        "vertex",
+                                        "llm",
+                                        "eval",
+                                        "pipeline"
+                                    ],
+                       "risk":  "R3",
+                       "effect":  "mutation",
+                       "humanGate":  true,
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "requiredSkills":  [
+                                              "spec",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "ai",
+                                       "quality"
+                                   ]
+                   },
+                   {
+                       "id":  "control-plane-change",
+                       "triggers":  [
+                                        "agent",
+                                        "manifest",
+                                        "rule",
+                                        "gate",
+                                        "hook",
+                                        "adapter",
+                                        "skill"
+                                    ],
+                       "risk":  "R3",
+                       "effect":  "mutation",
+                       "humanGate":  true,
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "requiredSkills":  [
+                                              "config-selftest",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "agents",
+                                       "governance"
+                                   ]
+                   },
+                   {
+                       "id":  "security-boundary",
+                       "triggers":  [
+                                        "secret",
+                                        "auth",
+                                        "permission",
+                                        "role",
+                                        "token",
+                                        "cryptography",
+                                        "webhook"
+                                    ],
+                       "risk":  "R4",
+                       "effect":  "mutation",
+                       "humanGate":  true,
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "requiredSkills":  [
+                                              "plan-check",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "security",
+                                       "governance"
+                                   ]
+                   },
+                   {
+                       "id":  "money-change",
+                       "triggers":  [
+                                        "paywall",
+                                        "credits",
+                                        "billing",
+                                        "tier",
+                                        "pricing"
+                                    ],
+                       "risk":  "R3",
+                       "effect":  "mutation",
+                       "humanGate":  true,
+                       "implementers":  [
+                                            "builder"
+                                        ],
+                       "verifiers":  [
+                                         "reviewer"
+                                     ],
+                       "requiredSkills":  [
+                                              "spec",
+                                              "ship-gate"
+                                          ],
+                       "evidence":  [
+                                        "typecheck",
+                                        "unit-tests",
+                                        "local-gate"
+                                    ],
+                       "pillars":  [
+                                       "security",
+                                       "reliability"
+                                   ]
+                   }
+               ]
+}

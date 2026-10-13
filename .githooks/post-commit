@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# core.hooksPath overrides .git/hooks entirely, so the pre-existing vault
+# reconcile trigger must be chained here or it silently stops firing.
+[ -f scripts/git-hooks/post-commit ] && sh scripts/git-hooks/post-commit
+exit 0

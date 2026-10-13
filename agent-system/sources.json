@@ -1,0 +1,90 @@
+{
+  "kind": "sources",
+  "version": 1,
+  "$lastVerified": "Date the origin was last re-read and the dependent files checked against it. Carried from agent-system/providers.json docsVerified on 2026-10-08 where one was recorded; null means never recorded. Bump it only with verifiedFrom (the page actually read, under origin) and a research:capture receipt for the session. scripts/check-source-freshness.mjs reports it weekly.",
+  "sources": [
+    {
+      "id": "claude-code-docs",
+      "origin": "https://code.claude.com/docs/",
+      "ttlDays": 30,
+      "appliesTo": [
+        "agent-system/providers.json"
+      ],
+      "lastVerified": "2026-08-16",
+      "verifiedFrom": "https://code.claude.com/docs/"
+    },
+    {
+      "id": "codex-docs",
+      "origin": "https://learn.chatgpt.com/docs/",
+      "ttlDays": 30,
+      "appliesTo": [
+        "agent-system/providers.json"
+      ],
+      "lastVerified": "2026-08-16",
+      "verifiedFrom": "https://learn.chatgpt.com/docs/"
+    },
+    {
+      "id": "antigravity-docs",
+      "origin": "https://antigravity.google/docs/",
+      "ttlDays": 30,
+      "appliesTo": [
+        "agent-system/providers.json",
+        "scripts/gen-agent-configs.mjs"
+      ],
+      "lastVerified": "2026-09-02",
+      "verifiedFrom": "https://antigravity.google/docs/"
+    },
+    {
+      "id": "github-copilot-agent-docs",
+      "origin": "https://docs.github.com/en/copilot/reference/custom-agents-configuration",
+      "ttlDays": 30,
+      "appliesTo": [
+        "agent-system/providers.json",
+        "scripts/agent-system/generate-adapters.mjs"
+      ],
+      "lastVerified": "2026-08-16",
+      "verifiedFrom": "https://docs.github.com/en/copilot/reference/custom-agents-configuration"
+    },
+    {
+      "id": "cursor-subagent-docs",
+      "origin": "https://cursor.com/docs/subagents",
+      "ttlDays": 30,
+      "appliesTo": [
+        "agent-system/providers.json",
+        "scripts/agent-system/generate-adapters.mjs"
+      ],
+      "lastVerified": "2026-08-16",
+      "verifiedFrom": "https://cursor.com/docs/subagents"
+    },
+    {
+      "id": "agent-skills-spec",
+      "origin": "https://agentskills.io/specification",
+      "ttlDays": 90,
+      "appliesTo": [
+        "agent-system/skills.json"
+      ],
+      "lastVerified": null,
+      "verifiedFrom": null
+    },
+    {
+      "id": "google-genai-pricing",
+      "origin": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "ttlDays": 30,
+      "appliesTo": [
+        "lib/config/gemini.config.ts"
+      ],
+      "lastVerified": null,
+      "verifiedFrom": null
+    },
+    {
+      "id": "billing-docs",
+      "origin": "https://docs.stripe.com/",
+      "ttlDays": 30,
+      "appliesTo": [
+        "lib/services/subscription.service.ts"
+      ],
+      "lastVerified": null,
+      "verifiedFrom": null
+    }
+  ]
+}

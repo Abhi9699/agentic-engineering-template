@@ -1,0 +1,165 @@
+{
+  "kind": "evidence",
+  "version": 1,
+  "evidenceTypes": [
+    {
+      "id": "content-evidence-packet",
+      "description": "Strict Zod-validated claim-level consultation with fixed freshness classes, reciprocal source maps, excerpt hashes, conflicts, unknowns and a non-mutating handoff receipt. Machine-checkable when invoked; not a provider-level automatic handoff gate.",
+      "producer": "node .agents/skills/content-growth-intelligence/scripts/validate-evidence.mjs <packet.json>",
+      "changedPaths": [
+        ".agents/skills/content-growth-intelligence/**"
+      ],
+      "machineCheckable": true
+    },
+    {
+      "id": "local-gate",
+      "description": "The offline ship gate over the current working tree",
+      "producer": "npm run gate",
+      "machineCheckable": true
+    },
+    {
+      "id": "typecheck",
+      "description": "TypeScript strict compilation with no errors",
+      "producer": "npx tsc --noEmit",
+      "machineCheckable": true
+    },
+    {
+      "id": "unit-tests",
+      "description": "The Vitest suite scoped to app, components, lib and scripts",
+      "producer": "npm test",
+      "machineCheckable": true
+    },
+    {
+      "id": "runtime-screenshot",
+      "description": "A rendered observation of the affected screen from a real browser",
+      "producer": "npx playwright screenshot $BASE_URL/<path> .playwright-shots/<name>.png",
+      "changedPaths": [
+        "app/**",
+        "components/**"
+      ],
+      "machineCheckable": true
+    },
+    {
+      "id": "rendered-measurement",
+      "description": "Deterministic DOM and layout measurement across widths and themes; not taste judgement",
+      "producer": "npm run critique",
+      "changedPaths": [
+        "app/**",
+        "components/**"
+      ],
+      "machineCheckable": true
+    },
+    {
+      "id": "money-path-report",
+      "description": "Signed billing webhook replay, forced paywall states, 402 envelope and idempotency checks",
+      "producer": "npm run webhook:simulate",
+      "changedPaths": [
+        "lib/services/subscription.service.ts",
+        "app/api/webhooks/**",
+        "lib/utils/ai-usage.ts",
+        "lib/config/constants.ts"
+      ],
+      "machineCheckable": true
+    },
+    {
+      "id": "prompt-eval-report",
+      "description": "Doc 16 section 7 golden-set eval record",
+      "producer": "npm run eval:prompts",
+      "changedPaths": [
+        "lib/config/prompt-registry.ts",
+        "lib/config/prompts/**",
+        "lib/config/gemini.config.ts",
+        "lib/repositories/gemini.repository.ts"
+      ],
+      "machineCheckable": true
+    },
+    {
+      "id": "docs-drift",
+      "description": "Generated references, vault integrity and provider mirror drift",
+      "producer": "npm run docs:check",
+      "machineCheckable": true
+    },
+    {
+      "id": "capability-health",
+      "description": "Skill provenance, unverifiable pins and per-provider secret confinement",
+      "producer": "npm run agent:doctor",
+      "machineCheckable": true
+    },
+    {
+      "id": "review",
+      "description": "One fresh-context reviewer checked an R2+ diff (money, auth, prompts, AI-output guards, schema, migrations, Server Actions, and the security boundary: secret and push guards, hook wiring, permission rules, and what decides a review is owed) from the review packet; npm run review:check proves every cited file:line before recording it. Once per PR, checked at pre-push. The rest of the control plane owes self-review instead (doc 34 W4): a session must not sign off its own change to a guard that constrains it. The receipt proves the review ran on exactly this content, not that its findings were acted on",
+      "producer": "reviewer subagent on npm run review:pack; the caller saves its answer and runs npm run review:check -- <review.md> --actor reviewer",
+      "changedPaths": [
+        "lib/services/billing.service.ts",
+        "lib/services/credit-ledger.service.ts",
+        "lib/services/credit-operation.service.ts",
+        "lib/services/subscription.service.ts",
+        "lib/config/constants.ts",
+        "app/api/billing/**",
+        "proxy.ts",
+        "lib/config/prompt-registry.ts",
+        "lib/config/prompts/**",
+        "lib/config/gemini.config.ts",
+        "lib/db/schema.ts",
+        "lib/db/migrations/**",
+        "app/**/*actions.ts",
+        "lib/quality/**",
+        "scripts/guard-*.mjs",
+        "scripts/hook-fail-closed.mjs",
+        ".claude/settings.json",
+        ".githooks/**",
+        "agent-system/evidence.json",
+        "scripts/agent-system/review.mjs",
+        "scripts/agent-system/evidence-receipt.mjs",
+        "scripts/agent-system/check-evidence.mjs",
+        "scripts/agent-system/hooks/**",
+        "scripts/pre-push-check.mjs",
+        "scripts/agent-system/replay.mjs"
+      ],
+      "machineCheckable": true,
+      "reviewerRole": "reviewer",
+      "phase": "pr",
+      "citedReview": true
+    },
+    {
+      "id": "self-review",
+      "description": "The main session reviewed an agent control-plane diff (guards, hooks, the gate, CI, manifests) from the review packet, and npm run review:check proved every cited file:line and quote against the code before recording it. Once per PR; a fresh-context review also satisfies it",
+      "producer": "npm run review:pack, then npm run review:check -- <review.md> --actor main-session",
+      "changedPaths": [
+        "agent-system/**",
+        "scripts/agent-system/**",
+        "scripts/gate.mjs",
+        "scripts/related-tests.mjs",
+        ".github/workflows/**"
+      ],
+      "machineCheckable": true,
+      "allowedActors": [
+        "main-session",
+        "reviewer"
+      ],
+      "phase": "pr",
+      "citedReview": true
+    },
+    {
+      "id": "visual-taste-review",
+      "description": "Human judgement that a screen looks right; no command can produce this",
+      "producer": "human:founder-review",
+      "machineCheckable": false,
+      "reviewerRole": "reviewer"
+    },
+    {
+      "id": "server-component-placement",
+      "description": "Reviewer confirmation that the client boundary sits at the interactive leaf",
+      "producer": "human:reviewer-checklist",
+      "machineCheckable": false,
+      "reviewerRole": "reviewer"
+    },
+    {
+      "id": "zod-boundary-coverage",
+      "description": "Reviewer confirmation that every new request, response or AI boundary is validated",
+      "producer": "human:reviewer-checklist",
+      "machineCheckable": false,
+      "reviewerRole": "reviewer"
+    }
+  ]
+}

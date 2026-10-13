@@ -1,0 +1,46 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# Build & outputs
+/dist
+/build
+/.next
+/out
+
+# Testing & coverage
+/coverage
+/.playwright-shots/
+
+# Environment and secrets (strictly forbidden to commit)
+.env*
+!.env.example
+*.pem
+*.key
+service_account.json
+
+# Cache & temporary files
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+*.log
+.turbo/
+
+# Obsidian local workspace state (preserves shared config, ignores local machine tabs/cache)
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
+**/.obsidian/cache/
+**/.obsidian/indexeddb/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+
+# System files
+.DS_Store
+Thumbs.db
+

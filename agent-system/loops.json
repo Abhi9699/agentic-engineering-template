@@ -1,0 +1,240 @@
+{
+  "kind": "loops",
+  "version": 1,
+  "loops": [
+    {
+      "id": "task-execution",
+      "controller": "parent-coordinator",
+      "state": "block",
+      "signals": [
+        "focused check failure",
+        "runtime observation"
+      ],
+      "actuators": [
+        "retry",
+        "block"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 3
+        },
+        "wallTimeMinutes": {
+          "max": 240
+        },
+        "providerCostUsd": {
+          "not_applicable": true,
+          "reason": "this loop never calls a paid endpoint"
+        }
+      },
+      "stopConditions": [
+        "attempt_budget_exhausted",
+        "distinct_failure_unchanged"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": false,
+      "rollback": "last-known-good"
+    },
+    {
+      "id": "verification",
+      "controller": "verification-coordinator",
+      "state": "warn",
+      "signals": [
+        "digest-bound evidence",
+        "final gate result"
+      ],
+      "actuators": [
+        "rerun",
+        "invalidate"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 3
+        },
+        "wallTimeMinutes": {
+          "max": 120
+        },
+        "providerCostUsd": {
+          "not_applicable": true,
+          "reason": "offline checks only"
+        }
+      },
+      "stopConditions": [
+        "changed_digest",
+        "invalid_receipt",
+        "attempt_budget_exhausted"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": false,
+      "rollback": "last-known-good"
+    },
+    {
+      "id": "research-freshness",
+      "controller": "source-checker",
+      "state": "shadow",
+      "signals": [
+        "ttl expiry",
+        "source conflict"
+      ],
+      "actuators": [
+        "refresh",
+        "escalate"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 2
+        },
+        "wallTimeMinutes": {
+          "max": 30
+        },
+        "providerCostUsd": {
+          "not_applicable": true,
+          "reason": "documentation fetches are not billed"
+        }
+      },
+      "stopConditions": [
+        "unresolved_conflict",
+        "required_source_unavailable"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": false,
+      "rollback": "retain-previous-citation"
+    },
+    {
+      "id": "paid-operation",
+      "controller": "paid-operation-coordinator",
+      "state": "block",
+      "signals": [
+        "budget reservation",
+        "usage metadata",
+        "UNKNOWN_SPEND"
+      ],
+      "actuators": [
+        "request",
+        "halt"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 1
+        },
+        "wallTimeMinutes": {
+          "max": 60
+        },
+        "providerCostUsd": {
+          "max": 1
+        }
+      },
+      "stopConditions": [
+        "ceiling_reached",
+        "unknown_spend",
+        "systematic_failure"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": true,
+      "rollback": "halt-and-report-ledger"
+    },
+    {
+      "id": "architecture-rollout",
+      "controller": "engineering-productivity",
+      "state": "shadow",
+      "signals": [
+        "shadow mismatch",
+        "false block rate",
+        "defect caught",
+        "latency"
+      ],
+      "actuators": [
+        "hold",
+        "promote",
+        "descope",
+        "rollback"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 3
+        },
+        "wallTimeMinutes": {
+          "max": 480
+        },
+        "providerCostUsd": {
+          "not_applicable": true,
+          "reason": "this loop never calls a paid endpoint"
+        }
+      },
+      "stopConditions": [
+        "attempt_budget_exhausted",
+        "missing_approval",
+        "kill_criterion"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": true,
+      "rollback": "last-known-good"
+    },
+    {
+      "id": "incident-recovery",
+      "controller": "incident-owner",
+      "state": "block",
+      "signals": [
+        "user impact",
+        "evidence integrity",
+        "rollback health"
+      ],
+      "actuators": [
+        "contain",
+        "restore",
+        "reconcile"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 3
+        },
+        "wallTimeMinutes": {
+          "max": 480
+        },
+        "providerCostUsd": {
+          "not_applicable": true,
+          "reason": "containment uses no paid endpoint"
+        }
+      },
+      "stopConditions": [
+        "stable_recovery",
+        "independent_review_complete"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": true,
+      "rollback": "last-known-good"
+    },
+    {
+      "id": "defect-to-gate",
+      "controller": "lessons-ledger",
+      "state": "block",
+      "signals": [
+        "defect found in review, plan, or production",
+        "repeat of a recorded lesson class"
+      ],
+      "actuators": [
+        "record",
+        "gate",
+        "prove"
+      ],
+      "budgets": {
+        "attempts": {
+          "max": 3
+        },
+        "wallTimeMinutes": {
+          "max": 120
+        },
+        "providerCostUsd": {
+          "not_applicable": true,
+          "reason": "recording and testing only; never calls a paid endpoint"
+        }
+      },
+      "stopConditions": [
+        "gate_added_and_proven_to_bite",
+        "lesson_recorded_as_open_with_named_blocker"
+      ],
+      "escalation": "founder",
+      "humanPromotionGate": false,
+      "rollback": "last-known-good"
+    }
+  ]
+}

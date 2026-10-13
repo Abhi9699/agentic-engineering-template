@@ -1,0 +1,6 @@
+{
+  "_generated": "DO NOT EDIT. Generated from agent-system/skills.json by scripts/agent-system/sync-skills.mjs. Run `npm run skills:sync -- --write` after changing a skill.",
+  "version": 2,
+  "algorithm": "agentic-skill-tree-sha256-v1",
+  "skills": {}
+}

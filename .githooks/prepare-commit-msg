@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Doc 36 M1: tag an agent's commit with `Agent-Tool: <tool>` so outcomes are measurable per
+# tool. Telemetry only: it never blocks or rewrites a human's commit.
+node scripts/agent-system/commit-trailer.mjs "$1" "$2" || true
+exit 0

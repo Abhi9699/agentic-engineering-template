@@ -1,0 +1,226 @@
+{
+  "$comment": "Role lenses for exec:review (doc 34 W10). Deterministic: no role is a model call. A role is a stage-bound checklist that switches on for the paths and words it owns. 'spec' roles write the cited Executive Assessment before code (CPO and CTO on every R2+ task, the rest when triggered; --check enforces citation and requiredFields). 'gates' items are what the machine already enforces. 'review' items go to the fresh reviewer, triggered by the diff's paths only (exec:review --review). 'launch' items apply to R3+ routes. Checklist items come only from sources the repo treats as binding: AGENTS.md section 4, docs 05/16/18/19, and the named standards. Every vendor in infra/inventory/systems.ts must have its officialDocs hosts listed here (infra/inventory/systems.test.ts).",
+  "kind": "executive-roles",
+  "version": 2,
+  "roles": [
+    {
+      "id": "CPO",
+      "title": "Chief Product Officer",
+      "always": true,
+      "stages": ["spec"],
+      "framework": "Jobs-to-be-done; binding §A decisions in docs/OPEN_QUESTIONS.md",
+      "citation": ["dated-url"],
+      "requiredFields": [],
+      "paths": [],
+      "keywords": [],
+      "ownerGates": ["Re-opening a §A decision"],
+      "checklist": {}
+    },
+    {
+      "id": "CTO",
+      "title": "Chief Technology Officer",
+      "always": true,
+      "stages": ["spec"],
+      "framework": "Architecture decision record: at least two options compared, trade-offs, reversibility (one-way vs two-way door)",
+      "citation": ["file-line"],
+      "requiredFields": ["Option A", "Option B", "Reversibility"],
+      "paths": [],
+      "keywords": [],
+      "ownerGates": ["One-way-door decisions (irreversible or costly to undo)"],
+      "checklist": {}
+    },
+    {
+      "id": "CFO",
+      "title": "Chief Financial Officer (FinOps)",
+      "always": false,
+      "stages": ["spec", "review"],
+      "framework": "FinOps Framework: unit cost per request, CI minutes, vendor plan limits, budget alerts",
+      "citation": ["official-url", "money"],
+      "requiredFields": ["Monthly cost change"],
+      "paths": ["lib/config/constants.ts", "lib/config/gemini.config.ts", "lib/repositories/gemini.repository.ts", ".github/workflows/", "vercel.json", "infra/", "package.json"],
+      "keywords": ["pricing", "credits", "billing", "budget", "model", "gemini", "workflow", "actions", "upgrade", "vendor"],
+      "ownerGates": ["Any new recurring cost or plan change"],
+      "checklist": {
+        "review": [
+          "Tier limits and credit costs are read from TIERS / AI_CREDIT_COSTS in lib/config/constants.ts rather than restated as literals (§4 rule 6)",
+          "Any balance or remaining-credit figure shown to a user is computed from the ledger value it claims to show, including zero (L-056, L-069)",
+          "A new model call, workflow job or vendor plan states its per-request or monthly cost in the spec"
+        ]
+      }
+    },
+    {
+      "id": "CISO",
+      "title": "Chief Information Security Officer",
+      "always": false,
+      "stages": ["spec", "review"],
+      "framework": "OWASP ASVS 5.0 Level 2; OWASP Top 10 for LLM Applications 2025; OWASP Agentic Top 10 2026; NIST SSDF (§A #116)",
+      "citation": ["official-url", "file-line"],
+      "requiredFields": ["Threat", "Control"],
+      "paths": ["proxy.ts", "lib/security/", "lib/utils/ai-sanitize.ts", "lib/env.ts", "app/api/", "actions.ts", ".github/workflows/", "infra/", "scripts/guard-"],
+      "keywords": ["auth", "secret", "token", "webhook", "permission", "security", "prompt", "injection", "upload", "oauth", "encryption"],
+      "ownerGates": ["Weakening any control; new secret or credential scope"],
+      "checklist": {
+        "review": [
+          "A paywall response is apiError(402, ErrorCodes.PAYMENT_REQUIRED, ...) (§4 rule 6; gate: check:rules paywall-403)",
+          "Every exported 'use server' function establishes its caller with auth() itself rather than trusting a userId argument (§4 rule 4b; gate: check:server-actions)",
+          "Secrets and webhook signatures are compared with crypto.timingSafeEqual, and credential modules import 'server-only' (§4 rule 4b)",
+          "Auth, ownership, credit settlement and input validation fail closed; a deliberate fail-open path says why in a comment (§4 rule 6)",
+          "A new unauthenticated route is listed in proxy.ts on purpose, and every request/response boundary is Zod-validated (§4 rule 4)"
+        ]
+      }
+    },
+    {
+      "id": "Legal",
+      "title": "General Counsel / Privacy",
+      "always": false,
+      "stages": ["spec"],
+      "framework": "India DPDP Act 2023 + DPDP Rules 2025; GDPR/UK GDPR; EU consumer law; vendor terms and DPAs; infra/inventory/systems.ts as the processor list",
+      "citation": ["official-url"],
+      "requiredFields": ["Obligation", "Applies to us because"],
+      "paths": ["app/privacy/", "app/terms/", "lib/analytics/", "infra/inventory/", "lib/services/user.service.ts", "infra/publishing/"],
+      "keywords": ["privacy", "consent", "personal", "analytics", "delete", "erasure", "terms", "refund", "subscription", "trial", "cookie", "gdpr", "dpdp", "license", "vendor", "publish", "region"],
+      "ownerGates": ["Every legal conclusion before launch; published legal text gets one human lawyer review before paid launch"],
+      "checklist": {}
+    },
+    {
+      "id": "DevOps",
+      "title": "DevOps / Site Reliability",
+      "always": false,
+      "stages": ["spec", "launch"],
+      "framework": "Google SRE (SLOs, error budgets, §A #108); DORA metrics; HashiCorp Terraform practice; CIS Google Cloud benchmark",
+      "citation": ["official-url", "file-line"],
+      "requiredFields": ["Plan", "Rollback", "Blast radius", "Monthly cost change"],
+      "paths": ["infra/", ".github/workflows/", ".github/rulesets/", "vercel.json", "lib/db/migrations/", "lib/db/index.ts", "next.config.ts", "package.json"],
+      "keywords": ["deploy", "terraform", "infra", "migration", "pool", "workflow", "rollback", "outage", "backup", "restore", "dns", "region", "scale"],
+      "ownerGates": ["terraform apply to production", "production DB migration", "deleting infrastructure", "billing or plan changes"],
+      "checklist": {
+        "launch": [
+          "Rollback: the revert target (commit or previous deploy) is named, and reverting needs no data repair",
+          "Feature flag: user-visible behaviour can be switched off without a deploy, or the PR says why it cannot",
+          "Migration compatibility: the schema change is additive or expand-then-contract, so the previous deploy still runs against it; production runs only through the db-migrate Action",
+          "Monitoring: the signal that shows this failing in production (log, metric, alert or SLO) is named"
+        ]
+      }
+    },
+    {
+      "id": "Design",
+      "title": "Design / UX lead",
+      "always": false,
+      "stages": ["review"],
+      "framework": "docs/product/18-design-system.md and the app/globals.css tokens; WCAG 2.2 AA; AGENTS.md §4 rules 2 and 4c; docs/engineering/19-quality-bar.md §3.9",
+      "citation": [],
+      "requiredFields": [],
+      "paths": [".tsx", ".css"],
+      "keywords": [],
+      "ownerGates": ["A new visual direction, palette or font pairing (doc 18 wins over any generated design file)"],
+      "checklist": {
+        "review": [
+          "Every control has a programmatic label (<label htmlFor> or aria-label), toggle groups expose aria-pressed/aria-selected, and there is one canonical control per state (§4 rule 4c)",
+          "Focus is visible through :focus-visible; no bare outline: none (§4 rule 4c)",
+          "Colours, spacing and type come from app/globals.css tokens (§4 rule 2; gates: check:tokens, raw-hex)",
+          "Motion animates transform and opacity only, lists transition properties explicitly, and respects prefers-reduced-motion (§4 rule 2)",
+          "Text meets WCAG 2.2 AA contrast (4.5:1 body, 3:1 large and UI parts), including over gradients and images (L-032)",
+          "Important or frequent touch targets are at least 44x44 and layout follows the 4px rhythm (doc 19 §3.9, §A #48/#49)",
+          "Images set explicit dimensions or an aspect ratio, so nothing shifts on load (§4 rule 4d)",
+          "The screenshot shows the requested state at the stated viewport and theme, with nothing truncated or overflowing"
+        ]
+      }
+    },
+    {
+      "id": "QA",
+      "title": "QA lead",
+      "always": false,
+      "stages": ["gates", "review"],
+      "framework": "docs/engineering/19-quality-bar.md (completion states, evidence packet, failure-mode register); AGENTS.md §6 step 4 and §7",
+      "citation": [],
+      "requiredFields": [],
+      "paths": [".ts", ".tsx", ".mjs", ".js", ".css", ".sql"],
+      "keywords": [],
+      "ownerGates": ["Shipping with a known failing check or a skipped runtime flow"],
+      "checklist": {
+        "gates": [
+          "tsc and the tests for changed files pass (Stop hook, then gate:quick before push)",
+          "Every evidence type the changed paths owe has a current receipt (check-evidence --enforce)"
+        ],
+        "review": [
+          "Each acceptance check in the spec maps to a test or to observed runtime evidence; none is claimed from types alone (doc 19 §1, QF-09)",
+          "A new Server Action or API route is tested on its authorized path and on the unauthenticated and wrong-owner rejections (§4 rule 4b)",
+          "A moved or removed function keeps every caller: grep the old name and compare the count before and after (L-078)",
+          "Props and state reach the component that renders them, and empty, zero, loading and error states render true values (L-069)",
+          "Runtime evidence for a product change shows 0 console errors, 0 hydration warnings and 0 uncaught rejections (§4, §7)",
+          "No assertion was deleted, skipped or loosened to get to green, and no new suppression lacks a written reason (§4)"
+        ]
+      }
+    },
+    {
+      "id": "AIQuality",
+      "title": "AI quality lead",
+      "always": false,
+      "stages": ["spec", "review"],
+      "framework": "docs/engineering/16-ai-prompt-spec.md §7 eval; OWASP Top 10 for LLM Applications 2025; AGENTS.md §4 rule 5",
+      "citation": ["file-line"],
+      "requiredFields": ["Eval plan", "Version bump"],
+      "paths": ["lib/config/prompt-registry.ts", "lib/config/prompts/", "lib/config/gemini.config.ts", "lib/repositories/gemini", "lib/utils/ai-sanitize.ts", "lib/services/voice", "lib/services/carousel", "lib/carousel/", "lib/validation/"],
+      "keywords": ["prompt", "eval", "voice", "carousel", "gemini", "llm", "generation"],
+      "ownerGates": ["A model change or a safety setting change"],
+      "checklist": {
+        "review": [
+          "User- or externally-sourced text interpolated into a registry template goes through escapeForPrompt / escapePromptDelimiters (§4 rule 5; OWASP LLM01 prompt injection)",
+          "A prompt-layer edit carries a SemVer bump and a recorded doc 16 §7 eval run (§4 rule 5; npm run eval:prompts)",
+          "Model output is Zod-validated before use, and a validation failure fails closed without charging credits (§4 rules 4 and 6; OWASP LLM05)",
+          "Prompts come from PROMPTS.<id>.build and every model call goes through GeminiRepository; safety stays BLOCK_MEDIUM_AND_ABOVE (§4 rule 5; gates: inline-prompt, gemini-outside-repo)",
+          "Output length is capped, and the carousel preview and export render the same deck (doc 19 QF-08; OWASP LLM10)"
+        ]
+      }
+    },
+    {
+      "id": "Data",
+      "title": "Data lead",
+      "always": false,
+      "stages": ["spec", "review"],
+      "framework": "docs/engineering/05-database-schema.md; AGENTS.md §4 rule 3; Drizzle migrations generated, never pushed (INF-05)",
+      "citation": ["file-line"],
+      "requiredFields": ["Data model delta", "Migration"],
+      "paths": ["lib/db/", "lib/services/", "lib/repositories/", "app/api/", "actions.ts"],
+      "keywords": ["schema", "migration", "table", "column", "query", "index", "database"],
+      "ownerGates": ["A destructive migration (drop, rename, type narrowing) or a production migration run"],
+      "checklist": {
+        "review": [
+          "Every query on a table with a userId column names the owner in its where: and(eq(t.id, id), eq(t.userId, userId)) (§4 rule 3; gate: check:ownership)",
+          "Every list query is bounded with a limit (§4 rule 3; gate: bounded-query)",
+          "The schema change lives in lib/db/schema.ts and its migration was generated by drizzle-kit generate in the same diff (§4 rule 3; gate: guard-migrations)",
+          "Reads use explicit db.query.*.findFirst/findMany({ where }) or .leftJoin (§4 rule 3; gate: define-relations)",
+          "Credit and other multi-step writes run in one transaction with a guarded atomic UPDATE (doc 05; §4 rule 6)"
+        ]
+      }
+    }
+  ],
+  "officialSources": {
+    "$comment": "A citation counts as official only if its host is one of these or a subdomain of one. Blogs and forums may support a point but never stand alone.",
+    "standards": ["owasp.org", "nist.gov", "w3.org", "sre.google", "dora.dev", "cisecurity.org", "finops.org", "rfc-editor.org", "ietf.org", "genai.owasp.org"],
+    "law": ["eur-lex.europa.eu", "europa.eu", "meity.gov.in", "indiacode.nic.in", "egazette.gov.in", "consumeraffairs.nic.in", "gst.gov.in", "cbic-gst.gov.in", "pib.gov.in", "legislation.gov.uk", "ico.org.uk", "ftc.gov"],
+    "vendors": [
+      "docs.github.com",
+      "vercel.com",
+      "supabase.com",
+      "clerk.com",
+      "cloud.google.com",
+      "ai.google.dev",
+      "stripe.com",
+      "posthog.com",
+      "upstash.com",
+      "docs.docker.com",
+      "developers.facebook.com",
+      "learn.microsoft.com",
+      "docs.x.com",
+      "developer.hashicorp.com",
+      "registry.terraform.io",
+      "nextjs.org",
+      "react.dev",
+      "orm.drizzle.team",
+      "zod.dev",
+      "nodejs.org",
+      "docs.anthropic.com"
+    ]
+  }
+}

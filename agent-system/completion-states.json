@@ -1,0 +1,94 @@
+{
+  "kind": "completion-states",
+  "version": 1,
+  "states": [
+    {
+      "id": "locally-verified",
+      "meaning": "Scoped work passes its required local checks against the current digest",
+      "requires": [
+        "typecheck",
+        "unit-tests"
+      ],
+      "doesNotAuthorize": [
+        "commit",
+        "push",
+        "open-pr",
+        "merge",
+        "deploy",
+        "external-mutation"
+      ]
+    },
+    {
+      "id": "handoff-ready",
+      "meaning": "Another owner can independently continue or verify the work",
+      "requires": [
+        "typecheck",
+        "unit-tests",
+        "docs-drift"
+      ],
+      "predecessor": "locally-verified",
+      "doesNotAuthorize": [
+        "commit",
+        "push",
+        "open-pr",
+        "merge",
+        "deploy",
+        "claim-ci-passed"
+      ]
+    },
+    {
+      "id": "pr-ready",
+      "meaning": "The branch is suitable for a PR when the user authorizes publishing",
+      "requires": [
+        "local-gate"
+      ],
+      "predecessor": "handoff-ready",
+      "doesNotAuthorize": [
+        "push",
+        "open-pr",
+        "merge",
+        "deploy"
+      ]
+    },
+    {
+      "id": "merge-ready",
+      "meaning": "Required clean CI and human review pass on this exact commit",
+      "requires": [
+        "ci-green",
+        "human-review"
+      ],
+      "predecessor": "pr-ready",
+      "doesNotAuthorize": [
+        "merge",
+        "deploy",
+        "claim-release"
+      ]
+    },
+    {
+      "id": "deployed",
+      "meaning": "An approved release is live and observed",
+      "requires": [
+        "deploy-approval",
+        "production-smoke",
+        "rollback-ready"
+      ],
+      "predecessor": "merge-ready",
+      "doesNotAuthorize": [
+        "claim-business-success"
+      ]
+    },
+    {
+      "id": "blocked",
+      "meaning": "A required input, authority, gate, source or bounded retry is exhausted",
+      "requires": [
+        "blocker-statement",
+        "attempts-record",
+        "safe-next-action"
+      ],
+      "doesNotAuthorize": [
+        "weaken-the-bar",
+        "silently-continue"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "antigravity-guard": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/agent-system/hooks/antigravity-command-guard.mjs",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "view_file|grep_search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/agent-system/hooks/antigravity-read-guard.mjs",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/agent-system/hooks/antigravity-preflight-guard.mjs",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "node scripts/agent-system/hooks/antigravity-preinvocation-research.mjs",
+        "timeout": 5
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "node scripts/agent-system/hooks/antigravity-stop-evidence-guard.mjs",
+        "timeout": 300
+      }
+    ]
+  }
+}
